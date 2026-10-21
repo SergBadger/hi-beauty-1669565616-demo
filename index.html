@@ -85,7 +85,7 @@
   }
 
   /* ---- акт 1 · лента работ ---------------------------------------------------- */
-  .gal { display: flex; flex-direction: column; justify-content: center; height: 100%; padding-top: 4.5rem; }
+  .gal { display: flex; flex-direction: column; justify-content: safe center; height: 100%; box-sizing: border-box; padding-top: 8rem; padding-bottom: 1.5rem; }
   .gal__rail { padding-inline: var(--v-gutter); align-items: flex-start; gap: clamp(1rem, 2.5vw, 2.5rem); }
   .gal__intro { flex: none; width: clamp(18rem, 28vw, 27rem); padding-top: clamp(.5rem, 4vh, 3rem); padding-right: var(--v-6); }
   .gal__intro .v-label { display: block; margin-bottom: var(--v-5); }
@@ -96,7 +96,14 @@
   .gal__price b { font-family: var(--v-font-display); font-weight: 400; font-size: var(--v-t-lg); color: var(--v-accent-deep); white-space: nowrap; }
   .gal__intro .v-btn { margin-top: var(--v-6); }
 
-  .work { flex: none; width: min(clamp(240px, 30vw, 400px), calc((100svh - 15rem) * .75)); }
+  @media (min-width: 861px) and (max-height: 780px) {
+    .gal__intro { width: clamp(18rem, 34vw, 27rem); padding-top: 0; }
+    .gal__intro h1 { font-size: clamp(1.6rem, 1rem + 1.4vw, 2.2rem); }
+    .gal__intro .v-label { margin-bottom: var(--v-3); }
+    .gal__intro p { margin-top: var(--v-3); }
+    .gal__intro .v-btn { margin-top: var(--v-4); }
+  }
+  .work { flex: none; width: min(clamp(240px, 30vw, 400px), calc((100svh - 19rem) * .75)); }
   .work__card { display: block; background: var(--v-surface); border-radius: var(--v-radius); overflow: hidden; box-shadow: var(--v-e1); cursor: zoom-in; }
   .work__card img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
   /* подпись – факт, она есть всегда; активная отличается номером и полной плотностью */
@@ -109,7 +116,7 @@
   .work__cap p span { color: var(--v-ink-soft); }
 
   /* фирменный ход: линия-указатель над лентой; заполнение от --gal-p (свой JS) */
-  .pointer { position: absolute; z-index: 4; left: var(--v-gutter); right: var(--v-gutter); top: clamp(4.6rem, 10vh, 6.5rem);
+  .pointer { position: absolute; z-index: 4; left: var(--v-gutter); right: var(--v-gutter); top: clamp(5.5rem, 10vh, 6.5rem);
     display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: var(--v-4); font-size: var(--v-t-xs); letter-spacing: var(--v-track-wide); text-transform: uppercase; color: var(--v-ink-soft); }
   .pointer__num { font-variant-numeric: tabular-nums; color: var(--v-ink); }
   .pointer__num i { font-style: normal; color: var(--v-ink-soft); }
@@ -118,11 +125,11 @@
   .pointer__line s { position: absolute; top: -3px; left: calc(var(--gal-p, 0) * 100%); width: 7px; height: 7px; margin-left: -3px; border-radius: 50%; background: var(--v-accent); text-decoration: none; }
   .pointer__name { color: var(--v-ink); }
   @media (max-width: 860px) {
-    .gal { padding-top: 5rem; }
-    .gal__intro { width: 56vw; padding-top: 0; padding-right: var(--v-3); }
+    .gal { padding-top: 8rem; }
+    .gal__intro { width: 56vw; padding-top: .5rem; padding-right: var(--v-3); }
     .gal__intro h1 { font-size: var(--v-t-xl); }
-    .work { width: min(78vw, calc((100svh - 14rem) * .75)); }
-    .pointer { top: 4.4rem; gap: var(--v-3); }
+    .work { width: min(78vw, calc((100svh - 19rem) * .75)); }
+    .pointer { top: 5.5rem; gap: var(--v-3); }
   }
   /* Тач: движок делает сцену горизонтальной прокруткой пальцем. Свой JS выносит вводную
      карточку и указатель над ленту (класс gal--touch), лента начинается с работы 01 целиком. */

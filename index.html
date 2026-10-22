@@ -133,7 +133,15 @@
   }
   /* Тач: движок делает сцену горизонтальной прокруткой пальцем. Свой JS выносит вводную
      карточку и указатель над ленту (класс gal--touch), лента начинается с работы 01 целиком. */
-  @media (pointer: coarse) {
+  /* Узкое окно с мышью (DevTools, планшет с мышью): та же лента-свайп, что на тач. Дубль блока vibe.css под (max-width: 860px). */
+  @media (max-width: 860px) {
+    .v-page [data-v-act="pan"] { height: auto; }
+    .v-page [data-v-act="pan"] [data-v-stage] { position: static; height: auto; overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; scroll-snap-type: x proximity; scrollbar-width: none; }
+    .v-page [data-v-act="pan"] [data-v-stage]::-webkit-scrollbar { display: none; }
+    .v-page [data-v-pan] { transform: none !important; }
+    .v-page [data-v-pan] > * { scroll-snap-align: start; }
+  }
+  @media (pointer: coarse), (max-width: 860px) {
     .gal--touch { padding-top: 5rem; padding-bottom: var(--v-2); }
     .gal--touch .gal__intro { width: auto; max-width: 36rem; padding: 0 var(--v-gutter); margin-bottom: var(--v-5); }
     .gal--touch .gal__intro p { display: none; }
@@ -509,6 +517,19 @@
 }
 </script>
 
+<script>
+  // Ширина до 860 px = режим ленты-свайпа, даже если указатель мышь (DevTools, узкое окно, планшет с мышью).
+  // Движок читает (pointer: coarse) один раз при загрузке: подменяем ответ до его подключения.
+  (function () {
+    if (window.innerWidth > 860) return;
+    var mm = window.matchMedia.bind(window);
+    window.matchMedia = function (q) {
+      var r = mm(q);
+      if (String(q).replace(/\s+/g, "") !== "(pointer:coarse)") return r;
+      return { matches: true, media: r.media, onchange: null, addListener: function () {}, removeListener: function () {}, addEventListener: function () {}, removeEventListener: function () {}, dispatchEvent: function () { return false; } };
+    };
+  })();
+</script>
 <script src="vibe.js"></script>
 <script>
   (function () {
